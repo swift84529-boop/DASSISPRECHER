@@ -1,0 +1,832 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>האתר הרשמי של דסי שפרכר - שחקנית ודוגמנית</title>
+    <style>
+        :root {
+            --charcoal-dark: #121212;
+            --graphite-main: #1e1e24;
+            --slate-gray: #2d2d34;
+            --accent-gold: #c5a880;
+            --accent-gold-hover: #e0ca9f;
+            --bg-light: #f5f6f8;
+            --text-dark: #1c1e21;
+            --text-muted: #7f8c8d;
+            --card-bg: #ffffff;
+            --whatsapp-green: #25d366;
+            --heart-red: #e74c3c;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        /* עיצוב פס גלילה */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-light);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--graphite-main);
+            border-radius: 4px;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--charcoal-dark), var(--graphite-main));
+            padding: 80px 20px;
+            text-align: center;
+            color: white;
+            border-bottom: 4px solid var(--accent-gold);
+            position: relative;
+        }
+
+        .profile-wrapper {
+            margin-bottom: 20px;
+        }
+
+        .profile-avatar {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--accent-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 3rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        header p {
+            font-size: 1.4rem;
+            color: var(--accent-gold);
+            margin: 12px 0 0 0;
+            letter-spacing: 3px;
+            font-weight: 300;
+        }
+
+        nav {
+            position: sticky;
+            top: 0;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+
+        .btn {
+            background-color: var(--graphite-main);
+            color: white;
+            text-decoration: none;
+            padding: 12px 28px;
+            margin: 5px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 50px;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: transparent;
+            color: var(--graphite-main);
+            border-color: var(--graphite-main);
+            transform: translateY(-2px);
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .section {
+            background-color: var(--card-bg);
+            padding: 45px;
+            margin-bottom: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+            border-top: 5px solid var(--graphite-main);
+        }
+
+        h2 {
+            color: var(--charcoal-dark);
+            margin-top: 0;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f1f3f5;
+            font-size: 2rem;
+        }
+
+        h3 {
+            color: var(--slate-gray);
+            margin-top: 25px;
+            font-size: 1.3rem;
+        }
+
+        .profile-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .profile-grid { grid-template-columns: 1fr; gap: 20px; }
+            .section { padding: 25px; }
+        }
+
+        ul {
+            padding-right: 20px;
+            line-height: 1.9;
+        }
+
+        li {
+            margin-bottom: 12px;
+        }
+
+        .filter-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .filter-btn {
+            background-color: #f1f3f5;
+            color: var(--text-dark);
+            border: none;
+            padding: 10px 22px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--graphite-main);
+            color: white;
+        }
+
+        .experience-item {
+            background-color: #fafbfc;
+            border: 1px solid #eaedf0;
+            padding: 18px 25px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-right: 5px solid var(--accent-gold);
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 25px;
+            margin-top: 15px;
+        }
+
+        .gallery-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            background-color: #fff;
+        }
+
+        .gallery-card img {
+            width: 100%;
+            height: 340px;
+            object-fit: cover;
+            display: block;
+            transition: transform 0.5s ease;
+            cursor: pointer;
+        }
+
+        .gallery-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .media-container {
+            padding: 15px;
+            background: #fafbfc;
+            height: 310px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 6px;
+            background: #000;
+        }
+
+        .interaction-panel {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+
+        .action-icon-btn {
+            background: rgba(255, 255, 255, 0.9);
+            border: none;
+            border-radius: 50%;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn-fav.active { color: #f1c40f; }
+        .btn-heart.active { color: var(--heart-red); }
+
+        .lightbox {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-img {
+            max-width: 85%;
+            max-height: 85%;
+            border-radius: 6px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            user-select: none;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 25px;
+            left: 25px;
+            color: white;
+            font-size: 2.5rem;
+            cursor: pointer;
+        }
+
+        .lightbox-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            font-size: 3.5rem;
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.2s;
+            user-select: none;
+        }
+
+        .lightbox-arrow:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .arrow-next { right: 30px; }
+        .arrow-prev { left: 30px; }
+
+        @media (max-width: 600px) {
+            .lightbox-arrow { width: 45px; height: 45px; font-size: 2rem; }
+            .arrow-next { right: 10px; }
+            .arrow-prev { left: 10px; }
+        }
+
+        .chat-widget-btn {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, var(--graphite-main), var(--charcoal-dark));
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.6rem;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            z-index: 1500;
+            border: 1px solid var(--accent-gold);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(197, 168, 128, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(197, 168, 128, 0); }
+        }
+
+        .chat-badge-text {
+            position: absolute;
+            top: -2px;
+            right: -2px;
+            background-color: var(--accent-gold);
+            color: var(--charcoal-dark);
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 2px 7px;
+            border-radius: 10px;
+        }
+
+        .chat-window {
+            display: none;
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            width: 340px;
+            height: 490px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 15px 50px rgba(0,0,0,0.15);
+            z-index: 1600;
+            flex-direction: column;
+            overflow: hidden;
+            border: 1px solid #e1e8ed;
+        }
+
+        .chat-window.active { display: flex; }
+
+        .chat-header {
+            background-color: var(--charcoal-dark);
+            color: white;
+            padding: 18px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--accent-gold);
+        }
+
+        .chat-header .close-chat { cursor: pointer; font-size: 1.4rem; }
+
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #fdfdfd;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 11px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .message.bot { background-color: #f1f3f5; color: #333; align-self: flex-start; border-top-right-radius: 2px; }
+        .message.user { background-color: var(--graphite-main); color: white; align-self: flex-end; border-top-left-radius: 2px; }
+
+        .choice-container { display: flex; flex-direction: column; gap: 8px; margin-top: 10px; width: 100%; }
+        .action-btn { display: block; text-decoration: none; padding: 12px; border-radius: 6px; text-align: center; font-weight: bold; font-size: 0.9rem; color: white; }
+        .btn-mail { background-color: var(--accent-gold); }
+        .btn-whatsapp { background-color: var(--whatsapp-green); }
+
+        .typing-indicator { align-self: flex-start; background-color: #f1f3f5; color: #777; font-style: italic; font-size: 0.85rem; padding: 6px 12px; border-radius: 6px; display: none; }
+        .chat-input-area { padding: 15px; background-color: white; border-top: 1px solid #eee; display: flex; flex-direction: column; gap: 5px; }
+        .chat-input-row { display: flex; gap: 8px; }
+        .chat-input-area input { flex: 1; border: 1px solid #ddd; padding: 12px 15px; border-radius: 6px; outline: none; font-size: 0.95rem; }
+        .chat-input-area button { background-color: var(--graphite-main); color: white; border: none; padding: 0 20px; border-radius: 6px; cursor: pointer; font-weight: bold; }
+        .char-counter { font-size: 0.75rem; color: var(--text-muted); text-align: left; }
+
+        footer {
+            background: linear-gradient(135deg, var(--charcoal-dark), #1a1a22);
+            color: #ecf0f1;
+            padding: 60px 20px 30px 20px;
+            margin-top: 80px;
+            border-top: 4px solid var(--accent-gold);
+        }
+
+        .footer-grid {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            text-align: right;
+        }
+
+        .footer-col h4 {
+            color: var(--accent-gold);
+            font-size: 1.3rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .footer-col p, .footer-col span { color: #b3b3b3; font-size: 0.95rem; line-height: 1.7; display: block; margin-bottom: 10px; }
+        .footer-links a { display: inline-block; background-color: rgba(255,255,255,0.05); color: white; text-decoration: none; padding: 10px 20px; border-radius: 4px; font-weight: 600; font-size: 0.9rem; transition: all 0.3s; border: 1px solid rgba(197, 168, 128, 0.2); }
+        .footer-links a:hover { background-color: var(--accent-gold); color: var(--charcoal-dark); }
+        .footer-bottom { text-align: center; margin-top: 50px; padding-top: 20px; border-top: 1px solid #222; font-size: 0.85rem; color: #666; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="profile-wrapper">
+            <img src="Image_20260428_000021_383.jpeg" alt="דסי שפרכר" class="profile-avatar">
+        </div>
+        <h1>דסי שפרכר</h1>
+        <p>שחקנית & דוגמנית</p>
+    </header>
+
+    <nav>
+        <a href="#cv" class="btn">קורות חיים</a>
+        <a href="#experience" class="btn">ניסיון מקצועי</a>
+        <a href="#gallery" class="btn">גלריה ומדיה</a>
+    </nav>
+
+    <div class="container">
+
+        <div id="cv" class="section">
+            <h2>פרטים וקורות חיים</h2>
+            <div class="profile-grid">
+                <div>
+                    <h3>נתונים אישיים</h3>
+                    <p><strong>גיל:</strong> 20</p>
+                    <p><strong>עיר:</strong> אלעד</p>
+                    <p><strong>גובה:</strong> 1.65 מ'</p>
+                    <p><strong>עיניים:</strong> חום ירוק</p>
+                    <p><strong>שיער:</strong> שטני</p>
+                    <p><strong>שפות:</strong> עברית, אנגלית (רמה טובה)</p>
+                </div>
+                <div>
+                    <h3>הכשרה ולימודים מקצועיים</h3>
+                    <ul>
+                        <li>לימודי משחק שנה ב-"מיפסולו"</li>
+                        <li>שנה ראשונה "אנסמבל" - שיפי כהנא</li>
+                        <li>שנה שנייה "אנסמבל" - חני אייזינשטין, דקלה רז, תמר פוגאטש, סופי בן שושן</li>
+                        <li>שנה שלישית "אנסמבל" - הילה הרציאל, תמר רוזן, סופי בן שושן (בימוו הופעה)</li>
+                    </ul>
+                </div>
+            </div>
+            <hr style="border: 0; border-top: 1px solid #eee; margin: 30px 0;">
+            <h3>כישורים נוספים</h3>
+            <ul>
+                <li><strong>שירה:</strong> למדה פיתוח קול אצל לילך מירצקי.</li>
+                <li><strong>ריקוד:</strong> לימודי בלט, רקדנית בהופעות גדולות בכל הארץ (ב-"מחפשת" של חני רובינשטיין, בהופעות בלהקה של "רוני", בקליפים לשרי אנגלרד ועוד).</li>
+                <li><strong>דיגמון:</strong> דגמנה לשמלות כלה, שמלות אירועים, בוקים של איפור, תסרוקות ועוד.</li>
+            </ul>
+            <h3>לבירורים והמלצות מקצועיות</h3>
+            <ul>
+                <li>שיפי כהנא: 054-8482602</li>
+                <li>אילה שפירא: 052-7673318</li>
+                <li>יעל בש: 050-4116031</li>
+            </ul>
+        </div>
+
+        <div id="experience" class="section">
+            <h2>ניסיון מקצועי והופעות</h2>
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 20px;">עבודה עם במאיות ובמאים גדולים (הילה הרציאל, חברת "זיטו הפקות", מוטי זילברברג, שיפי כהנא ועוד).</p>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterSelection('all', this)">הכל</button>
+                <button class="filter-btn" onclick="filterSelection('media', this)">סדרות ותוכניות</button>
+                <button class="filter-btn" onclick="filterSelection('cinema', this)">קולנוע ותדמית</button>
+                <button class="filter-btn" onclick="filterSelection('theater', this)">תיאטרון ובמה</button>
+            </div>
+
+            <div class="experience-list">
+                <div class="experience-item filter-item media"><strong>"העל יסודי"</strong> – תפקיד ראשי בתפקיד "שיינא"</div>
+                <div class="experience-item filter-item media"><strong>"ימים"</strong> (יעל כהן) – שחקנית ראשית</div>
+                <div class="experience-item filter-item media"><strong>"הכניסה למורשים"</strong> (אסתי נחמן) – שחקנית</div>
+                <div class="experience-item filter-item media"><strong>"לכי תהיי"</strong> (דינה מהלחמניות) – שחקנית</div>
+                <div class="experience-item filter-item media"><strong>"מעגל סגור"</strong> (חיה אלבום) – שחקנית</div>
+                <div class="experience-item filter-item media"><strong>"לאן הרוח"</strong> (מימי פראג) – שחקנית</div>
+                <div class="experience-item filter-item media"><strong>"לכי תביני"</strong> (רחלי כהן) – שחקנית</div>
+
+                <div class="experience-item filter-item cinema"><strong>"מכאן לאבא"</strong> (ש. לנדו) – שחקנית משנית</div>
+                <div class="experience-item filter-item cinema"><strong>"בלאק אאוט"</strong> (מרים רוקח) – שחקנית</div>
+                <div class="experience-item filter-item cinema"><strong>"גדלתי עלי"</strong> (איילת איינהורן) – שחקנית</div>
+                <div class="experience-item filter-item cinema"><strong>"דמנטה"</strong> (אלישבע הולצמן) – שחקנית</div>
+                <div class="experience-item filter-item cinema">סרט תדמית של <strong>"רחל נוימן"</strong></div>
+
+                <div class="experience-item filter-item theater">תיאטרון לילדים <strong>"יולי והני בממלכת החלומות"</strong></div>
+
+                <div class="experience-item filter-item cinema media"><strong>[בקרוב]</strong> סרט של יעל באש – שחקנית ראשית בתפקיד "מיכלינה"</div>
+                <div class="experience-item filter-item cinema media"><strong>[בקרוב]</strong> סרט של אסתי שפריי – שחקנית ראשית בתפקיד "יעל"</div>
+                <div class="experience-item filter-item cinema"><strong>[בקרוב]</strong> סרט של שרה עמור – בתפקיד "המזכירה"</div>
+            </div>
+        </div>
+
+        <div id="gallery" class="section">
+            <h2>גלריה ווידאו</h2>
+            <p style="font-style: italic; color: var(--text-muted); margin-bottom: 20px;">ניתן לסנן לפי סוגי מדיה, וללחוץ על התמונות למעבר נוח ביניהן.</p>
+            
+            <div class="filter-tabs">
+                <button class="filter-btn active" onclick="filterGallery('all', this)">הכל</button>
+                <button class="filter-btn" onclick="filterGallery('gal-img', this)">תמונות</button>
+                <button class="filter-btn" onclick="filterGallery('gal-video', this)">סרטונים</button>
+            </div>
+
+            <div class="gallery">
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_295.jpeg" alt="דסי שפרכר" onclick="openLightbox(0)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_347.jpeg" alt="דסי שפרכר" onclick="openLightbox(1)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_365.jpeg" alt="דסי שפרכר" onclick="openLightbox(2)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_383.jpeg" alt="דסי שפרכר" onclick="openLightbox(3)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_444.jpeg" alt="דסי שפרכר" onclick="openLightbox(4)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_461.jpeg" alt="דסי שפרכר" onclick="openLightbox(5)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+                <div class="gallery-card filter-gal gal-img">
+                    <img src="Image_20260428_000021_485.jpeg" alt="דסי שפרכר" onclick="openLightbox(6)">
+                    <div class="interaction-panel">
+                        <button class="action-icon-btn btn-fav" onclick="toggleBtn(this)">★</button>
+                        <button class="action-icon-btn btn-heart" onclick="toggleBtn(this)">♥</button>
+                    </div>
+                </div>
+
+                <div class="gallery-card filter-gal gal-video">
+                    <div class="media-container">
+                        <video controls poster="Image_20260428_000021_383.jpeg">
+                            <source src="דסייי.mp4" type="video/mp4">
+                            הדפדפן שלך אינו תומך בנגן הוידאו.
+                        </video>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="imageLightbox" class="lightbox" onclick="dismissLightbox(event)">
+        <span class="lightbox-close" onclick="closeLightbox()">&times;</span>
+        <button class="lightbox-arrow arrow-prev" onclick="prevImage(event)">❯</button>
+        <img class="lightbox-img" id="lightboxTargetImg" src="" alt="תמונה מוגדלת">
+        <button class="lightbox-arrow arrow-next" onclick="nextImage(event)">❮</button>
+    </div>
+
+    <div class="chat-widget-btn" onclick="toggleChatWindow()">
+        💬
+        <div class="chat-badge-text">1</div>
+    </div>
+
+    <div class="chat-window" id="chatWindow">
+        <div class="chat-header">
+            <div>✨ פנייה ישירה לדסי</div>
+            <div class="close-chat" onclick="toggleChatWindow()">&times;</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="message bot">שלום וברכה! כתבו לי כאן את פרטי ההצעה שלכם, ובסיום תוכלו לבחור אם לשלוח לי אותה ישירות למייל או להודעת הצאט (וואטסאפ)!</div>
+            <div class="typing-indicator" id="typingIndicator">דסי מקלידה...</div>
+        </div>
+        <div class="chat-input-area">
+            <div class="chat-input-row">
+                <input type="text" id="chatInput" placeholder="כתבו את ההודעה כאן..." onkeypress="handleChatKeyPress(event)" oninput="updateCharCounter()">
+                <button onclick="sendChatMessage()">שלח</button>
+            </div>
+            <div class="char-counter" id="charCounter">תווים: 0</div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>על האתר</h4>
+                <p>תיק עבודות ופורטפוליו מקצועי של השחקנית והדוגמנית דסי שפרכר. כאן תוכלו להתעדכן בפרויקטים האחרונים, לצפות בבוק הרשמי ולתאם שיתופי פעולה מקצועיים.</p>
+            </div>
+            <div class="footer-col">
+                <h4>פרטי התקשרות</h4>
+                <p><strong>📍 מיקום:</strong> אלעד, ישראל (זמינות לנסיעות)</p>
+                <p><strong>📞 טלפון נייד:</strong> 054-8532325</p>
+                <p><strong>✉ דואר אלקטרוני:</strong> DD0548532325@GMAIL.COM</p>
+            </div>
+            <div class="footer-col">
+                <h4>מענה מהיר</h4>
+                <span>זמינות לפניות ואודישנים בימים א'-ה' בין השעות 09:00 - 19:00.</span>
+                <div class="footer-links" style="margin-top: 15px;">
+                    <a href="mailto:DD0548532325@GMAIL.COM">שלחו מייל מהיר</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            &copy; 2026 כל הזכויות שמורות לדסי שפרכר – שחקנית ודוגמנית.
+        </div>
+    </footer>
+
+    <script>
+        const galleryImages = [
+            "Image_20260428_000021_295.jpeg",
+            "Image_20260428_000021_347.jpeg",
+            "Image_20260428_000021_365.jpeg",
+            "Image_20260428_000021_383.jpeg",
+            "Image_20260428_000021_444.jpeg",
+            "Image_20260428_000021_461.jpeg",
+            "Image_20260428_000021_485.jpeg"
+        ];
+        let currentImgIndex = 0;
+
+        function filterSelection(category, buttonElement) {
+            const items = document.getElementsByClassName('filter-item');
+            const buttons = document.getElementsByClassName('filter-btn');
+            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+            if (buttonElement) buttonElement.classList.add('active');
+
+            for (let i = 0; i < items.length; i++) {
+                if (category === 'all' || items[i].classList.contains(category)) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        }
+
+        function filterGallery(category, buttonElement) {
+            const items = document.getElementsByClassName('filter-gal');
+            const buttons = buttonElement.parentElement.getElementsByClassName('filter-btn');
+            for (let i = 0; i < buttons.length; i++) buttons[i].classList.remove('active');
+            if (buttonElement) buttonElement.classList.add('active');
+
+            for (let i = 0; i < items.length; i++) {
+                if (category === 'all' || items[i].classList.contains(category)) {
+                    items[i].style.display = 'block';
+                } else {
+                    items[i].style.display = 'none';
+                }
+            }
+        }
+
+        // פונקציה פשוטה לתיקון בעיית הסינון אם כפתור "סרטונים" לא הציג את הוידאו
+        window.addEventListener('DOMContentLoaded', () => {
+            filterGallery('all', document.querySelector('#gallery .filter-btn'));
+        });
+
+        function toggleBtn(element) {
+            element.classList.toggle('active');
+        }
+
+        function openLightbox(index) {
+            currentImgIndex = index;
+            const lightbox = document.getElementById('imageLightbox');
+            const lightboxImg = document.getElementById('lightboxTargetImg');
+            lightboxImg.src = galleryImages[currentImgIndex];
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox() {
+            document.getElementById('imageLightbox').classList.remove('active');
+        }
+
+        function nextImage(event) {
+            event.stopPropagation();
+            currentImgIndex = (currentImgIndex + 1) % galleryImages.length;
+            document.getElementById('lightboxTargetImg').src = galleryImages[currentImgIndex];
+        }
+
+        function prevImage(event) {
+            event.stopPropagation();
+            currentImgIndex = (currentImgIndex - 1 + galleryImages.length) % galleryImages.length;
+            document.getElementById('lightboxTargetImg').src = galleryImages[currentImgIndex];
+        }
+
+        function dismissLightbox(event) {
+            if (event.target.id === 'imageLightbox') {
+                closeLightbox();
+            }
+        }
+
+        function toggleChatWindow() {
+            const chatWindow = document.getElementById('chatWindow');
+            chatWindow.classList.toggle('active');
+            const badge = document.querySelector('.chat-badge-text');
+            if(badge) badge.style.display = 'none';
+        }
+
+        function handleChatKeyPress(event) {
+            if (event.key === 'Enter') sendChatMessage();
+        }
+
+        function updateCharCounter() {
+            const input = document.getElementById('chatInput');
+            document.getElementById('charCounter').innerText = "תווים: " + input.value.length;
+        }
+
+        function sendChatMessage() {
+            const input = document.getElementById('chatInput');
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingIndicator = document.getElementById('typingIndicator');
+            const userText = input.value.trim();
+
+            if (userText === '') return;
+
+            const userMessageDiv = document.createElement('div');
+            userMessageDiv.className = 'message user';
+            userMessageDiv.innerText = userText;
+            messagesContainer.insertBefore(userMessageDiv, typingIndicator);
+
+            input.value = '';
+            document.getElementById('charCounter').innerText = "תווים: 0";
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            typingIndicator.style.display = 'block';
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+            setTimeout(() => {
+                typingIndicator.style.display = 'none';
+                const botMessageDiv = document.createElement('div');
+                botMessageDiv.className = 'message bot';
+                
+                const emailAddress = "DD0548532325@GMAIL.COM";
+                const emailSubject = encodeURIComponent("פנייה מאתר הפורטפוליו");
+                const emailBody = encodeURIComponent("היי דסי, השארתי לך הודעה באתר:\n\n\"" + userText + "\"");
+                const mailtoUrl = "mailto:" + emailAddress + "?subject=" + emailSubject + "&body=" + emailBody;
+
+                const phoneNumber = "972548532325";
+                const whatsappText = encodeURIComponent("היי דסי, ראיתי את האתר שלך והשארתי לך פנייה:\n\n\"" + userText + "\"");
+                const whatsappUrl = "https://wa.me/" + phoneNumber + "?text=" + whatsappText;
+
+                botMessageDiv.innerHTML = "איפה תרצו לקבל את המענה? ביחרו את שיטת השליחה המועדפת עליכם:<br>" + 
+                                          "<div class='choice-container'>" +
+                                          "<a href='" + mailtoUrl + "' class='action-btn btn-mail'>✉ שליחה ישירה למייל</a>" +
+                                          "<a href='" + whatsappUrl + "' target='_blank' class='action-btn btn-whatsapp'>💬 שליחה לצ'אט בוואטסאפ</a>" +
+                                          "</div>";
+                
+                messagesContainer.insertBefore(botMessageDiv, typingIndicator);
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }, 800);
+        }
+    </script>
+</body>
+</html>
